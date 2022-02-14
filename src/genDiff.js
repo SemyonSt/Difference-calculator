@@ -2,30 +2,27 @@ import { readFileSync } from 'fs';
 import _ from 'lodash';
 
 // Читаем файл
-export default (filepath1, filepath2) => {
-  const file1 = readFileSync(filepath1, 'utf-8');
-  // const file1 = String(readFileSync('__fixtures__/file1.json')); Выдает так же, как и через utf-8
+const parseFile = (file) => {
+  const files = readFileSync(file, 'utf-8');
+  const obj = JSON.parse(files); // Парсим файл - т.е. приводим его к виду объекта
+  return obj
+}
 
-  const file2 = readFileSync(filepath2, 'utf-8');
-  // Парсим файл - т.е. приводим его к виду объекта
-  const obj1 = JSON.parse(file1);
-  const obj2 = JSON.parse(file2);
+const genDiff = (filepath1, filepath2) => {
+  const file1 = parseFile(filepath1);
+  const file2 = parseFile(filepath2);
 
-  genDiff(obj1, obj2);
-};
-
-const genDiff = (obj1, obj2) => {
-  const keys = _.union(_.keys(obj1), _.keys(obj2));
+  const keys = _.union(_.keys(file1), _.keys(file2));
 
   const result = [];
   for (const key of keys) {
-    if (!_.has(obj1, key)) {
-      result.push(`+ ${key}: ${obj2[key]}`);
-    } else if (!_.has(obj2, key)) {
-      result.push(`- ${key}: ${obj1[key]}`);
-    } else if (obj1[key] === obj2[key]) {
-      result.push(`  ${key}: ${obj1[key]}`);
-    } else { result.push(`- ${key}: ${obj1[key]} \n+ ${key}: ${obj2[key]}`); }
+    if (!_.has(file1, key)) {
+      result.push(`+ ${key}: ${file2[key]}`);
+    } else if (!_.has(file2, key)) {
+      result.push(`- ${key}: ${file1[key]}`);
+    } else if (file1[key] === file2[key]) {
+      result.push(`  ${key}: ${file1[key]}`);
+    } else { result.push(`- ${key}: ${file1[key]} \n+ ${key}: ${file2[key]}`); }
   }
   // сортирую массив по первой букве ключа
   result.sort((a, b) => {
@@ -35,6 +32,6 @@ const genDiff = (obj1, obj2) => {
     if (x > y) { return 1; }
     return 0;
   });
-  console.log(['{', ...result, '}'].join('\n'));
-  return ['{', ...result, '}'].join('\n')
-};
+  return ['{', ...result, '}'].join('\n');
+}
+export default genDiff;

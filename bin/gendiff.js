@@ -13,5 +13,4 @@ program
   });
 program.parse(process.argv);
 
-
-//node bin/gendiff.js __fixtures__/file1.json __fixtures__/file2.json
+// node bin/gendiff.js __fixtures__/file1.json __fixtures__/file2.json
