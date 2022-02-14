@@ -10,6 +10,7 @@ export default (filepath1, filepath2) => {
   // Парсим файл - т.е. приводим его к виду объекта
   const obj1 = JSON.parse(file1);
   const obj2 = JSON.parse(file2);
+
   genDiff(obj1, obj2);
 };
 
@@ -35,4 +36,5 @@ const genDiff = (obj1, obj2) => {
     return 0;
   });
   console.log(['{', ...result, '}'].join('\n'));
+  return ['{', ...result, '}'].join('\n')
 };

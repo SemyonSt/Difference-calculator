@@ -12,3 +12,6 @@ program
     console.log(genDiff(filepath1, filepath2));
   });
 program.parse(process.argv);
+
+
+//node bin/gendiff.js __fixtures__/file1.json __fixtures__/file2.json

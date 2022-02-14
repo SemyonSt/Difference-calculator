@@ -1,0 +1,11 @@
+{
+    "configurations": [
+    
+        {
+            "type": "pwa-chrome",
+            "name": "http://str.split('').reverse().join('')",
+            "request": "launch",
+            "url": "http://str.split('').reverse().join('')"
+        }
+    ]
+}
