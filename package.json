@@ -21,6 +21,7 @@
   "type": "module",
   "homepage": "https://github.com/SemyonSt/frontend-project-lvl2#readme",
   "dependencies": {
+    "ci": "^2.1.1",
     "commander": "^9.0.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"

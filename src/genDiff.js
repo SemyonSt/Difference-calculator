@@ -10,17 +10,17 @@ const genDiff = (filepath1, filepath2) => {
   const result = [];
   for (const key of keys) {
     if (!_.has(file1, key)) {
-      result.push(`+ ${key}: ${file2[key]}`);
+      result.push(`  + ${key}: ${file2[key]}`);
     } else if (!_.has(file2, key)) {
-      result.push(`- ${key}: ${file1[key]}`);
+      result.push(`  - ${key}: ${file1[key]}`);
     } else if (file1[key] === file2[key]) {
-      result.push(`  ${key}: ${file1[key]}`);
-    } else { result.push(`- ${key}: ${file1[key]} \n+ ${key}: ${file2[key]}`); }
+      result.push(`    ${key}: ${file1[key]}`);
+    } else { result.push(`  - ${key}: ${file1[key]} \n  + ${key}: ${file2[key]}`); }
   }
   // сортирую массив по первой букве ключа
   result.sort((a, b) => {
-    const x = a.charCodeAt(2);
-    const y = b.charCodeAt(2);
+    const x = a.charCodeAt(4);
+    const y = b.charCodeAt(4);
     if (x < y) { return -1; }
     if (x > y) { return 1; }
     return 0;
