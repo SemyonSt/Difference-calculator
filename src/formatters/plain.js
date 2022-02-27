@@ -31,7 +31,7 @@ const plain = (data) => {
       }
     });
   const result = iter(data);
-  
+
   return result.filter((str) => str !== 'null').join('\n');
 };
 

@@ -53,7 +53,7 @@ test('plainGendiff.json', () => {
 
   const obj = getTree(filepath1, filepath2);
 
-  const diff = format(obj, formatName = 'plain' );
+  const diff = format(obj, formatName = 'plain');
   const equlGenn = readFile('nested.txt');
   const actual = genDiff(diff);
   expect(actual).toEqual(equlGenn);
