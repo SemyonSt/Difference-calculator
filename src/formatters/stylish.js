@@ -3,18 +3,18 @@ import _ from 'lodash';
 const replacer = ' ';
 const spacesCount = 4;
 
-const stringify = (value, depth = 1) => {
-  const iter = (currentValue, depth) => {
+const stringify = (data, depth = 1) => {
+  const iter = (currentValue, currentDepth) => {
     if (!_.isObject(currentValue)) {
       return `${currentValue}`;
     }
 
-    const indentSize = depth * spacesCount;
+    const indentSize = currentDepth * spacesCount;
     const currentIndent = replacer.repeat(indentSize);
     const bracketIndent = replacer.repeat(indentSize - spacesCount);
     const lines = Object
       .entries(currentValue)
-      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, depth + 1)}`);
+      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, currentDepth + 1)}`);
 
     return [
       '{',
@@ -25,7 +25,7 @@ const stringify = (value, depth = 1) => {
   const indentSize = depth * spacesCount - 2;
   const currentIndent = replacer.repeat(indentSize);
   const bracketIndent = replacer.repeat(indentSize - 2);
-  const result = value.flatMap(({
+  const result = data.flatMap(({
     key, type, value, children,
   }) => {
     switch (type) {
