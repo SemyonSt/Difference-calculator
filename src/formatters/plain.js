@@ -11,7 +11,7 @@ const getValue = (value) => {
 };
 
 const plain = (data) => {
-  const iter = (currentObj, path = ' ') => currentObj
+  const iter = (currentObj, path = '') => currentObj
     .flatMap(({
       key, type, value, children,
     }) => {
@@ -21,11 +21,11 @@ const plain = (data) => {
         case 'nested':
           return iter(children, currentPath);
         case 'added':
-          return `Property ${jointPath} was added with value: ${getValue(value)}`;
+          return `Property '${jointPath}' was added with value: ${getValue(value)}`;
         case 'removed':
-          return `Property ${jointPath} was removed`;
+          return `Property '${jointPath}' was removed`;
         case 'update':
-          return `Property ${jointPath} was updated. From ${getValue(value.value1)} to ${getValue(value.value2)}`;
+          return `Property '${jointPath}' was updated. From ${getValue(value.value1)} to ${getValue(value.value2)}`;
         default:
           return 'null';
       }
