@@ -11,59 +11,20 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
-test('gendiff.json', () => {
-  const filepath1 = getFixturePath('file1.json');
-  const filepath2 = getFixturePath('file2.json');
 
-  const equlGenn = readFile('plain.test.txt');
-  const actual = genDiff(filepath1, filepath2);
-  expect(actual).toEqual(equlGenn);
-});
+test.each([
+  ['file1.json', 'file2.json', 'stylish', 'plain.test.txt'],
+  ['file1.yaml', 'file2.yaml', 'stylish', 'plain.test.txt'],
+  ['file3.json', 'file4.json', 'stylish', 'nested.test.txt'],
+  ['file3.yaml', 'file4.yaml', 'stylish', 'nested.test.txt'],
+  ['file3.json', 'file4.json', 'plain', 'nested.txt'],
+  ['file3.yaml', 'file4.yaml', 'plain', 'nested.txt'],
 
-test('gendiff.yaml', () => {
-  const filepath1 = getFixturePath('file1.yaml');
-  const filepath2 = getFixturePath('file2.yaml');
+])(`'test'`, (file1, file2, format, expected) => {
+  const filepath1 = getFixturePath(file1);
+  const filepath2 = getFixturePath(file2);
 
-  const equlGenn = readFile('plain.test.txt');
-  const actual = genDiff(filepath1, filepath2);
-  expect(actual).toEqual(equlGenn);
-});
+  const result = genDiff(filepath1, filepath2, format)
 
-test('nestedGendiff.json', () => {
-  const filepath1 = getFixturePath('file3.json');
-  const filepath2 = getFixturePath('file4.json');
-
-  const equlGenn = readFile('nested.test.txt');
-  const actual = genDiff(filepath1, filepath2);
-  expect(actual).toEqual(equlGenn);
-});
-
-test('nestedGendiff.yaml', () => {
-  const filepath1 = getFixturePath('file3.yaml');
-  const filepath2 = getFixturePath('file4.yaml');
-
-  const equlGenn = readFile('nested.test.txt');
-  const actual = genDiff(filepath1, filepath2);
-  expect(actual).toEqual(equlGenn);
-});
-
-test('plainGendiff.json', () => {
-  const filepath1 = getFixturePath('file3.json');
-  const filepath2 = getFixturePath('file4.json');
-
-  const obj = getTree(filepath1, filepath2);
-
-  const diff = format(obj, formatName = 'plain');
-  const equlGenn = readFile('nested.txt');
-  const actual = genDiff(diff);
-  expect(actual).toEqual(equlGenn);
-});
-
-test('plainGendiff.yaml', () => {
-  const filepath1 = getFixturePath('file3.yaml');
-  const filepath2 = getFixturePath('file4.yaml');
-
-  const equlGenn = readFile('nested.txt');
-  const actual = genDiff(filepath1, filepath2, plain);
-  expect(actual).toEqual(equlGenn);
+  expect(result).toEqual(readFile(expected));
 });
