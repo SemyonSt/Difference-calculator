@@ -16,6 +16,8 @@ test.each([
   ['file3.yaml', 'file4.yaml', 'stylish', 'nested.test.txt'],
   ['file3.json', 'file4.json', 'plain', 'nested.txt'],
   ['file3.yaml', 'file4.yaml', 'plain', 'nested.txt'],
+  ['file3.json', 'file4.json', 'json', 'json.test.txt'],
+  ['file3.yaml', 'file4.yaml', 'json', 'json.test.txt'],
 
 ])('\'test\'', (file1, file2, format, expected) => {
   const filepath1 = getFixturePath(file1);
