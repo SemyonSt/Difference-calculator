@@ -38,10 +38,5 @@ jobs:
           CI: true
       - name: Run linter
         # Run Linter
-        run: 
+        run: |
           make lint
-        run: 
-          make test
-        with:
-          coverageCommand: make test-coverage
-          debug: true
