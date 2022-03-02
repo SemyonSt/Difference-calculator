@@ -41,3 +41,4 @@ jobs:
         run: 
           make lint
         run: make test
+        coverageCommand: make test-coverage
