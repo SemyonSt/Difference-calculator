@@ -40,4 +40,4 @@ jobs:
         # Run Linter
         run: 
           make lint
-      - run: make test
+        run: make test
