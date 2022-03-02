@@ -2,15 +2,12 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import { readFileSync } from 'fs';
 import genDiff from '../src/genDiff.js';
-import format from '../src/formatters/index.js';
-import plain from '../src/formatters/plain.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
-
 
 test.each([
   ['file1.json', 'file2.json', 'stylish', 'plain.test.txt'],
@@ -20,11 +17,11 @@ test.each([
   ['file3.json', 'file4.json', 'plain', 'nested.txt'],
   ['file3.yaml', 'file4.yaml', 'plain', 'nested.txt'],
 
-])(`'test'`, (file1, file2, format, expected) => {
+])('\'test\'', (file1, file2, format, expected) => {
   const filepath1 = getFixturePath(file1);
   const filepath2 = getFixturePath(file2);
 
-  const result = genDiff(filepath1, filepath2, format)
+  const result = genDiff(filepath1, filepath2, format);
 
   expect(result).toEqual(readFile(expected));
 });
