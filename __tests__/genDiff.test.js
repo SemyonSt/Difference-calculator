@@ -5,9 +5,17 @@ import genDiff from '../src/genDiff.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+console.log('dirname!', __dirname);
 
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
+const getFixturePath = (filename) => {
+  console.log('Filename1', filename);
+  return path.join(__dirname, '..', '__fixtures__', filename);
+};
+
+const readFile = (filename) => {
+  console.log('Filename2', filename);
+  return readFileSync(getFixturePath(filename), 'utf-8');
+};
 
 test.each([
 
@@ -18,11 +26,8 @@ test.each([
   ['file1.json', 'file2.json', 'json', 'json.test.txt'],
   ['file1.yaml', 'file2.yaml', 'json', 'json.test.txt'],
 
-])('\'test\'', (file1, file2, format, expected) => {
-  const filepath1 = file1;
-  const filepath2 = file2;
-
-  const result = genDiff(filepath1, filepath2, format);
+])('test%# %s and %s in %s format', (file1, file2, format, expected) => {
+  const result = genDiff(file1, file2, format);
 
   expect(result).toEqual(readFile(expected));
 });
