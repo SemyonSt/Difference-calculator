@@ -1,10 +1,10 @@
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import yaml from 'js-yaml';
 import path from 'path';
 
 const parseFile = (file) => {
   const format = path.extname(file);
-  const files = fs.readFileSync(file, 'utf-8');
+  const files = readFileSync(file, 'utf-8');
   if (format === '.yaml' || format === '.yml') {
     return yaml.load(files);
   }

@@ -1,21 +1,15 @@
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import genDiff from '../src/genDiff.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 console.log('dirname!', __dirname);
 
-const getFixturePath = (filename) => {
-  console.log('Filename1', filename);
-  return path.join(__dirname, '..', '__fixtures__', filename);
-};
+const getFixturePath = (filename) => path.join('__fixtures__', filename);
 
-const readFile = (filename) => {
-  console.log('Filename2', filename);
-  return fs.readFileSync(getFixturePath(filename), 'utf-8');
-};
+const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
 test.each([
 
