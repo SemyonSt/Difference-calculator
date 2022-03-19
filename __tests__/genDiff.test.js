@@ -20,7 +20,10 @@ test.each([
   ['file1.yaml', 'file2.yaml', 'json', 'json.test.txt'],
 
 ])('test%# %s and %s in %s format', (file1, file2, format, expected) => {
-  const result = genDiff(file1, file2, format);
+  const filepath1 = getFixturePath(file1);
+  const filepath2 = getFixturePath(file2);
+
+  const result = genDiff(filepath1, filepath2, format);
 
   expect(result).toEqual(readFile(expected));
 });
