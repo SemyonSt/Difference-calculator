@@ -1,17 +1,13 @@
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+import path from 'path';
 import parse from './parsers.js';
 import getTree from './tree.js';
 import format from './formatters/index.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const buildFullPath = (filename) => path.resolve(process.cwd(), filename);
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
-  const getPath1 = getFixturePath(filepath1);
-  const getPath2 = getFixturePath(filepath2);
+  const getPath1 = buildFullPath(filepath1);
+  const getPath2 = buildFullPath(filepath2);
 
   const file1 = parse(getPath1);
   const file2 = parse(getPath2);
