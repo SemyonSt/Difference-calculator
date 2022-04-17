@@ -10,7 +10,7 @@ const getExtension = (filename) => path.extname(filename);
 
 const readFiles = (filename) => readFileSync(filename, 'utf-8');
 
-const data = (files) => {
+const getData = (files) => {
   const getPath = buildFullPath(files);
   const extension = getExtension(files);
   const file = readFiles(getPath);
@@ -19,13 +19,13 @@ const data = (files) => {
 };
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
-  const file1 = data(filepath1);
-  const file2 = data(filepath2);
+  const file1 = getData(filepath1);
+  const file2 = getData(filepath2);
 
   const obj = getTree(file1, file2);
 
-  const diff = format(obj, formatName);
+  const getFormatted = format(obj, formatName);
 
-  return diff;
+  return getFormatted;
 };
 export default genDiff;

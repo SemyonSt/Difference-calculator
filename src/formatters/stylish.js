@@ -3,7 +3,7 @@ import _ from 'lodash';
 const replacer = ' ';
 const spacesCount = 4;
 
-const stringify = (data, depth = 1) => {
+const stringify = (value, depth) => {
   const iter = (currentValue, currentDepth) => {
     if (!_.isObject(currentValue)) {
       return `${currentValue}`;
@@ -22,31 +22,37 @@ const stringify = (data, depth = 1) => {
       `${bracketIndent}}`,
     ].join('\n');
   };
-  const indentSize = depth * spacesCount - 2;
-  const currentIndent = replacer.repeat(indentSize);
-  const bracketIndent = replacer.repeat(indentSize - 2);
-  const result = data.flatMap(({
-    key, type, value, children,
-  }) => {
-    switch (type) {
-      case 'nested':
-        return `${currentIndent}  ${key}: ${stringify(children, depth + 1)}`;
-      case 'added':
-        return `${currentIndent}+ ${key}: ${iter(value, depth + 1)}`;
-      case 'removed':
-        return `${currentIndent}- ${key}: ${iter(value, depth + 1)}`;
-      case 'update':
-        return `${currentIndent}- ${key}: ${iter(value.value1, depth + 1)}\n${currentIndent}+ ${key}: ${iter(value.value2, depth + 1)}`;
-      default:
-        return `${currentIndent}  ${key}: ${iter(value, depth + 1)}`;
-    }
-  });
-  return [
-    '{',
-    ...result,
-    `${bracketIndent}}`,
-  ].join('\n');
+  return iter(value, depth)
 };
 
-const stylish = (tree) => stringify(tree);
+const stylish = (tree) => {
+  const iter = (node, depth) => {
+    const indentSize = depth * spacesCount - 2;
+    const currentIndent = replacer.repeat(indentSize);
+    const bracketIndent = replacer.repeat(indentSize - 2);
+    const result = node.flatMap(({
+      key, type, value, children,
+    }) => {
+      switch (type) {
+        case 'nested':
+          return `${currentIndent}  ${key}: ${iter(children, depth + 1)}`;
+        case 'added':
+          return `${currentIndent}+ ${key}: ${stringify(value, depth + 1)}`;
+        case 'removed':
+          return `${currentIndent}- ${key}: ${stringify(value, depth + 1)}`;
+        case 'update':
+          return `${currentIndent}- ${key}: ${stringify(value.value1, depth + 1)}\n${currentIndent}+ ${key}: ${iter(value.value2, depth + 1)}`;
+        default:
+          return `${currentIndent}  ${key}: ${stringify(value, depth + 1)}`;
+      }
+    });
+    return [
+      '{',
+      ...result,
+      `${bracketIndent}}`,
+    ].join('\n');
+  };
+  return iter(tree, 1);
+};
+
 export default stylish;
