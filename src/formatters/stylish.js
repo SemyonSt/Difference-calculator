@@ -41,7 +41,7 @@ const stylish = (tree) => {
         case 'removed':
           return `${currentIndent}- ${key}: ${stringify(value, depth + 1)}`;
         case 'update':
-          return `${currentIndent}- ${key}: ${stringify(value.value1, depth + 1)}\n${currentIndent}+ ${key}: ${iter(value.value2, depth + 1)}`;
+          return `${currentIndent}- ${key}: ${stringify(value.value1, depth + 1)}\n${currentIndent}+ ${key}: ${stringify(value.value2, depth + 1)}`;
         default:
           return `${currentIndent}  ${key}: ${stringify(value, depth + 1)}`;
       }
