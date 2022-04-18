@@ -9,11 +9,10 @@ const formatters = {
 };
 
 const format = (data, formatName = 'stylish') => {
-  const format = formatters[formatName];
-  if (!formatters) {
+  if (!formatters[formatName]) {
     throw new Error(`Unknown format ${formatName}`);
   }
-  return format(data);
+  return formatters[formatName](data);
 };
 
 export default format;

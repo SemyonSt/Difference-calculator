@@ -22,7 +22,7 @@ const stringify = (value, depth) => {
       `${bracketIndent}}`,
     ].join('\n');
   };
-  return iter(value, depth)
+  return iter(value, depth);
 };
 
 const stylish = (tree) => {
