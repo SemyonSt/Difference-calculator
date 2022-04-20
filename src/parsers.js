@@ -1,9 +1,9 @@
 import yaml from 'js-yaml';
 
 const parsers = {
-  'yml': yaml.load,
-  'yaml': yaml.load,
-  'json': JSON.parse,
+  yml: yaml.load,
+  yaml: yaml.load,
+  json: JSON.parse,
 };
 
 const parseFile = (data, extension) => {

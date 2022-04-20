@@ -14,7 +14,7 @@ const getData = (files) => {
   const getPath = buildFullPath(files);
   const extension = getExtension(files).slice(1);
   const file = readFiles(getPath);
-  
+
   return parse(file, extension);
 };
 
