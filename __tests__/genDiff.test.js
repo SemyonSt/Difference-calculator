@@ -14,17 +14,14 @@ const expectedStylish = readFile('stylish.test.txt');
 const expectedPlain = readFile('plain.test.txt');
 const expectedJson = readFile('json.test.txt');
 
-const expectTest = ['no format', 'stylish', 'plain', 'json'];
 const extencion = [['json'], ['yaml']];
 
-describe.each(expectTest)('format %s', () => {
-  test.each(extencion)('test%# %s', (ext) => {
-    const filepath1 = getFixturePath(`file1.${ext}`);
-    const filepath2 = getFixturePath(`file2.${ext}`);
+test.each(extencion)('test %s', (ext) => {
+  const filepath1 = getFixturePath(`file1.${ext}`);
+  const filepath2 = getFixturePath(`file2.${ext}`);
 
-    expect(genDiff(filepath1, filepath2)).toEqual(expectedStylish);
-    expect(genDiff(filepath1, filepath2, 'stylish')).toEqual(expectedStylish);
-    expect(genDiff(filepath1, filepath2, 'plain')).toEqual(expectedPlain);
-    expect(genDiff(filepath1, filepath2, 'json')).toEqual(expectedJson);
-  });
+  expect(genDiff(filepath1, filepath2)).toEqual(expectedStylish);
+  expect(genDiff(filepath1, filepath2, 'stylish')).toEqual(expectedStylish);
+  expect(genDiff(filepath1, filepath2, 'plain')).toEqual(expectedPlain);
+  expect(genDiff(filepath1, filepath2, 'json')).toEqual(expectedJson);
 });
