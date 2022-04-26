@@ -4,25 +4,22 @@ const replacer = ' ';
 const spacesCount = 4;
 
 const stringify = (value, depth) => {
-  const iter = (currentValue, currentDepth) => {
-    if (!_.isObject(currentValue)) {
-      return `${currentValue}`;
-    }
+  if (!_.isObject(value)) {
+    return `${value}`;
+  }
 
-    const indentSize = currentDepth * spacesCount;
-    const currentIndent = replacer.repeat(indentSize);
-    const bracketIndent = replacer.repeat(indentSize - spacesCount);
-    const lines = Object
-      .entries(currentValue)
-      .map(([key, val]) => `${currentIndent}${key}: ${iter(val, currentDepth + 1)}`);
+  const indentSize = depth * spacesCount;
+  const currentIndent = replacer.repeat(indentSize);
+  const bracketIndent = replacer.repeat(indentSize - spacesCount);
+  const lines = Object
+    .entries(value)
+    .map(([key, val]) => `${currentIndent}${key}: ${stringify(val, depth + 1)}`);
 
-    return [
-      '{',
-      ...lines,
-      `${bracketIndent}}`,
-    ].join('\n');
-  };
-  return iter(value, depth);
+  return [
+    '{',
+    ...lines,
+    `${bracketIndent}}`,
+  ].join('\n');
 };
 
 const stylish = (tree) => {

@@ -6,13 +6,13 @@ import format from './formatters/index.js';
 
 const buildFullPath = (filename) => path.resolve(process.cwd(), filename);
 
-const getExtension = (filename) => path.extname(filename);
+const getExtension = (filename) => path.extname(filename).slice(1);
 
 const readFiles = (filename) => readFileSync(filename, 'utf-8');
 
 const getData = (files) => {
   const getPath = buildFullPath(files);
-  const extension = getExtension(files).slice(1);
+  const extension = getExtension(files);
   const file = readFiles(getPath);
 
   return parse(file, extension);
